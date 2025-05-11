@@ -1,0 +1,24 @@
+<html>
+
+<head>
+</head>
+
+<body>
+      <script src="../../build/3Dmol.js"></script>
+      <div style="height: 600px; width: 600px;" class='viewer_3Dmoljs' 
+      data-config='ambientOcclusion:strength~1.2,radius=10' data-pdb='3M8L' data-backgroundcolor='black'
+            data-select1='chain:A' data-style1='stick:radius=1,color=red' 
+            data-select2='chain:B' data-style2='sphere:color=white'
+            data-select3='chain:C'  data-surface3='VDW;color:white;opacity:1'></div>
+    <div id="time"></div>
+    <script>
+        setInterval(function() {
+            let start = window.performance.now();
+            $3Dmol.viewers[0].rotate(1);
+            let end = window.performance.now();
+            document.getElementById("time").textContent = "Time: "+(end-start);
+    }, 100);
+    </script>
+</body>
+
+</html>
