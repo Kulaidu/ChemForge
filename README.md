@@ -34,17 +34,17 @@ ChemForge is packaged as a one-click installer and includes all dependencies. Do
 - 2GB RAM
 
 ## Developers
+### Edmar - Manager
 ![Edmar](/static/img/edmar.png)
-## Edmar - Manager
 
+### Timothy - Database
 ![Timothy](/static/img/timothy.png)
-## Timothy - Database
 
+### Clyde - Backend
 ![Clyde](/static/img/clyde.png)
-## Clyde - Backend
 
+### Erika - Frontend
 ![Erika](/static/img/erika.png)
-## Erika - Frontend
 
 ## Contact
 Pass Email: chemforgesupport.agonizing182@passfwd.com
