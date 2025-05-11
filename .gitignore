@@ -1,0 +1,9 @@
+node_modules
+__pycache__
+build
+ChemForge-win32-x64
+dist
+electron-app
+Output
+python
+app.spec
