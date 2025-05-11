@@ -4,10 +4,11 @@
 # Force HTML and JS detection
 *.html linguist-language=HTML
 *.js linguist-language=JavaScript
+*.css linguist-language=CSS
 
-# Don't count CSS or downloaded Bootstrap stuff
+# Don't count auto-generated stuff
 static/bootstrap/** linguist-vendored
-static/css/** linguist-vendored
-
-# Ignore database files from stats
-*.db linguist-generated
+static/3Dmol.js/** linguist-vendored
+static/bootstrap-icons.css linguist-vendored
+static/bootstrap-icons.json linguist-vendored
+static/bootstrap-icons.min.css linguist-vendored
