@@ -1,0 +1,13 @@
+# Force Python detection for .py files
+*.py linguist-language=Python
+
+# Force HTML and JS detection
+*.html linguist-language=HTML
+*.js linguist-language=JavaScript
+
+# Don't count CSS or downloaded Bootstrap stuff
+static/bootstrap/** linguist-vendored
+static/css/** linguist-vendored
+
+# Ignore database files from stats
+*.db linguist-generated
