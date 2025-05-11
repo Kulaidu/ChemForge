@@ -33,7 +33,7 @@ ChemForge is packaged as a one-click installer and includes all dependencies. Do
 - 2GB Free Disk Space
 - 2GB RAM
 
-## Developers
+## Parokya ni Edmar (Developers)
 ### Edmar - Manager
 ![Edmar](/static/img/edmar.png)
 
