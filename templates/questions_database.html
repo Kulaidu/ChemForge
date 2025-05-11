@@ -1,0 +1,284 @@
+{% extends "layout.html" %}
+
+{% block head %}
+    <title>ChemForge</title>
+{% endblock %}
+
+{% block main %}
+<div class="container">
+    <div id="controls">
+        <a href="/databases" class="btn btn-outline-secondary"><i class="bi bi-arrow-left"></i> Return</a>
+    </div>
+
+    <h1 class="text-center">{{ database }} Database Records</h1>
+
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <form method="get" action="{{ url_for('compounds_database' if database == 'Compounds' else 'questions_database') }}" class="d-flex align-items-center">
+            <label for="per_page" class="me-2 text-nowrap">Entries per page:</label>
+            <select name="per_page" id="per_page" class="form-select me-2 select_pages">
+                {% for option in [10, 25, 50, 75, 100] %}
+                    <option value="{{ option }}" {% if option == per_page %}selected{% endif %}>{{ option }}</option>
+                {% endfor %}
+            </select>
+            <button type="submit" class="btn btn-primary">Apply</button>
+        </form>
+        <button type="button" class="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#addEntryModal">
+            <i class="bi bi-plus-circle"></i> Add Question
+        </button>
+    </div>
+
+    <table class="table table-bordered table-striped" id="questions_database_table">
+        <thead>
+            <tr>
+                <th class="hidden">id</th>
+                {% for header in data[0].keys() if header != 'id' %}
+                    <th>{{ header }}</th>
+                {% endfor %}
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for row in data %}
+            <tr>
+                <td class="hidden">{{ row['id'] }}</td>
+                {% for key, value in row.items() if key != 'id' %}
+                    <td>{{ value }}</td>
+                {% endfor %}
+                <td>
+                    <div class="tbl_btn-container">
+                        <a href="#" class="btn btn-warning btn-sm edit-btn"
+                            data-id="{{ row['id'] }}" data-question="{{ row['question_text'] }}" 
+                            data-category="{{ row['category'] if 'category' in row else '' }}" data-difficulty="{{ row['difficulty'] if 'difficulty' in row else '' }}"
+                            data-choices="{{ row['choices'] if 'choices' in row else '' }}" data-correct_answer="{{ row['correct_answer'] if 'correct_answer' in row else '' }}"
+                            data-inchi="{{ row['inchi'] if 'inchi' in row else '' }}"
+                            data-bs-toggle="modal" data-bs-target="#editEntryModal">
+                            <i class="bi bi-pencil-fill"></i>
+                        </a>
+                        <a href="#" class="btn btn-danger btn-sm delete-btn" data-id="{{ row['id'] }}" data-bs-toggle="modal" data-bs-target="#deleteEntryModal">
+                            <i class="bi bi-trash-fill"></i>
+                        </a>
+                    </div>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <nav>
+        <ul class="pagination">
+            {% set total_pages = (total_count // per_page) + (1 if total_count % per_page > 0 else 0) %}
+            {% for p in range(1, total_pages + 1) %}
+                <li class="page-item {% if p == page %}active{% endif %}">
+                    <a class="page-link" href="{{ url_for('compounds_database' if database == 'Compounds' else 'questions_database', page=p, per_page=per_page) }}">{{ p }}</a>
+                </li>
+            {% endfor %}
+        </ul>
+    </nav>
+    
+</div>
+
+<!-- Delete Confirmation Modal -->
+<div class="modal fade" id="deleteEntryModal" tabindex="-1" aria-labelledby="deleteEntryModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="deleteEntryModalLabel">Confirm Deletion</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                Are you sure you want to delete this question?
+            </div>
+            <div class="modal-footer">
+                <form method="post" action="{{ url_for('delete_entry') }}">
+                    <input type="hidden" name="entry_id" id="deleteEntryId">
+                    <input type="hidden" name="database" value="Questions">
+                    <button type="submit" class="btn btn-danger">Delete</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Edit Entry Modal -->
+<div class="modal fade" id="editEntryModal" tabindex="-1" aria-labelledby="editEntryModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editEntryModalLabel">Edit Entry</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form method="post" action="{{ url_for('edit_entry') }}" id="editEntryForm">
+                    <input type="hidden" name="entry_id" id="editEntryId">
+                    <input type="hidden" name="database" value="{{ database }}">
+                    
+                    <div class="mb-3">
+                        <label for="editQuestion" class="form-label">Question</label>
+                        <input type="text" class="form-control" id="editQuestion" name="question_text">
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="editCategory" class="form-label">Category</label>
+                        <select class="form-select" id="editCategory" name="category" required>
+                            <option value="Multiple Choice">Multiple Choice</option>
+                            <option value="Identification">Identification</option>
+                        </select>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="editDifficulty" class="form-label">Difficulty</label>
+                        <select class="form-select" id="editDifficulty" name="difficulty" required>
+                            <option value="Easy">Easy</option>
+                            <option value="Hard">Hard</option>
+                        </select>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="editCorrectAnswer" class="form-label">Correct Answer</label>
+                        <input type="text" class="form-control" id="editCorrectAnswer" name="correct_answer" required>
+                    </div>
+
+                    <div class="mb-3" id="editChoicesDiv">
+                        <label class="form-label">Choices</label>
+                        <input type="text" class="form-control mb-2 edit-choice" id="editChoice1" name="choice1">
+                        <input type="text" class="form-control mb-2 edit-choice" id="editChoice2" name="choice2">
+                        <input type="text" class="form-control mb-2 edit-choice" id="editChoice3" name="choice3">
+                        <input type="text" class="form-control edit-choice" id="editChoice4" name="choice4">
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="editInchi" class="form-label">InChI (For displaying structures)</label>
+                        <input type="text" class="form-control" id="editInchi" name="inchi">
+                    </div>
+
+                    <button type="submit" class="btn btn-primary">Save Changes</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Add Entry Modal -->
+<div class="modal fade" id="addEntryModal" tabindex="-1" aria-labelledby="addEntryModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="addEntryModalLabel">Add Question</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form method="post" action="{{ url_for('add_entry') }}" id="addEntryForm">
+                    <input type="hidden" name="database" value="{{ database }}">
+                    
+                    <div class="mb-3">
+                        <label for="addQuestion" class="form-label">Question</label>
+                        <input type="text" class="form-control" id="addQuestion" name="question_text" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="addCategory" class="form-label">Category</label>
+                        <select class="form-select" id="addCategory" name="category" required>
+                            <option value="Multiple Choice">Multiple Choice</option>
+                            <option value="Identification">Identification</option>
+                        </select>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="addDifficulty" class="form-label">Difficulty</label>
+                        <select class="form-select" id="addDifficulty" name="difficulty" required>
+                            <option value="Easy">Easy</option>
+                            <option value="Hard">Hard</option>
+                        </select>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="addCorrectAnswer" class="form-label">Correct Answer</label>
+                        <input type="text" class="form-control" id="addCorrectAnswer" name="correct_answer" required>
+                    </div>
+
+                    <div class="mb-3" id="addChoicesDiv">
+                        <label class="form-label">Choices</label>
+                        <input type="text" class="form-control mb-2 add-choice" name="choice1">
+                        <input type="text" class="form-control mb-2 add-choice" name="choice2">
+                        <input type="text" class="form-control mb-2 add-choice" name="choice3">
+                        <input type="text" class="form-control add-choice" name="choice4">
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="addInchi" class="form-label">InChI (Optional)</label>
+                        <input type="text" class="form-control" id="addInchi" name="inchi">
+                    </div>
+
+                    <button type="submit" class="btn btn-primary">Add Question</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        function toggleChoicesInput(categorySelect, choicesDiv) {
+            if (choicesDiv) {
+                choicesDiv.style.display = categorySelect.value === "Multiple Choice" ? "block" : "none";
+            }
+        }
+
+        const addCategorySelect = document.getElementById("addCategory");
+        const editCategorySelect = document.getElementById("editCategory");
+        const addChoicesDiv = document.getElementById("addChoicesDiv");
+        const editChoicesDiv = document.getElementById("editChoicesDiv");
+        
+        toggleChoicesInput(addCategorySelect, addChoicesDiv);
+        addCategorySelect.addEventListener("change", function() {
+            toggleChoicesInput(this, addChoicesDiv);
+        });
+        
+        toggleChoicesInput(editCategorySelect, document.getElementById("editChoicesDiv"));
+        editCategorySelect.addEventListener("change", function() {
+            toggleChoicesInput(this, document.getElementById("editChoicesDiv"));
+        });
+
+        document.querySelectorAll(".delete-btn").forEach(btn => {
+            btn.addEventListener("click", function() {
+                document.getElementById("deleteEntryId").value = this.getAttribute("data-id");
+            });
+        });
+
+        document.querySelectorAll(".edit-btn").forEach(btn => {
+            btn.addEventListener("click", function() {
+                document.getElementById("editEntryId").value = this.getAttribute("data-id");
+                document.getElementById("editQuestion").value = this.getAttribute("data-question");
+                
+                const category = this.getAttribute("data-category");
+                document.getElementById("editCategory").value = category;
+                
+                document.getElementById("editDifficulty").value = this.getAttribute("data-difficulty");
+                document.getElementById("editCorrectAnswer").value = this.getAttribute("data-correct_answer");
+                document.getElementById("editInchi").value = this.getAttribute("data-inchi") || '';
+                
+                const choices = this.getAttribute("data-choices");
+                if (choices && choices.length > 0) {
+                    const choiceArray = choices.split(',');
+                    for (let i = 0; i < Math.min(choiceArray.length, 4); i++) {
+                        const inputId = `editChoice${i+1}`;
+                        const input = document.getElementById(inputId);
+                        if (input) {
+                            input.value = choiceArray[i].trim();
+                        }
+                    }
+                } else {
+                    document.querySelectorAll('.edit-choice').forEach(input => {
+                        input.value = '';
+                    });
+                }
+                
+                toggleChoicesInput(document.getElementById("editCategory"), document.getElementById("editChoicesDiv"));
+            });
+        });
+    });
+</script>
+{% endblock %}

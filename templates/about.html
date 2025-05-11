@@ -1,0 +1,67 @@
+{% extends "layout.html" %}
+
+{% block head %}
+    <title>ChemForge</title>
+{% endblock %}
+
+{% block main %}
+<div class="about-container container">
+    <div class="about-center">
+        <div class="row align-items-center justify-content-center text-center">
+            <img src="{{ url_for('static', filename='logo.png') }}" alt="ChemForge Logo">
+            <h3>ChemForge</h3>
+            <div class="about-desc">
+                <p>
+                    An offline desktop chemical structure generator Application designed for High School Students and Chemistry Teachers, focusing on ionic and covalent bonding. It serves as an interactive learning tool to simplify and enhance their understanding of chemical compounds.
+                </p>
+                <p>
+                    This application helps students visualize chemical structures, emphasizing the differences between Ionic and Covalent Bonding. Additionally, students can take self-tests to assess their learnings. It provides an intuitive interface where students can explore how elements combine to form compounds, guided by concepts like electron sharing, and transfer.
+                </p>
+            </div>
+        </div>
+
+        <div class="row align-items-center justify-content-center text-center developer">
+            <h3>The Developers</h3>
+            <h5>Parokya ni Edmar</h5>
+            <div class="row row-cols-2 row-cols-md-4 developer-bottom g-3 justify-content-center">
+                <div class="col d-flex justify-content-center">
+                    <div class="developer-card card">
+                        <img src="/static/img/edmar.png" class="card-img-top" alt="Developer 1">
+                        <div class="card-body">
+                            <h5 class="card-title">Edmar</strong></h5>
+                            <p class="card-text">Project Manager</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col d-flex justify-content-center">
+                    <div class="developer-card card">
+                        <img src="/static/img/clyde.png" class="card-img-top" alt="Developer 2">
+                        <div class="card-body">
+                            <h5 class="card-title">Clyde</strong></h5>
+                            <p class="card-text">Backend Developer</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col d-flex justify-content-center">
+                    <div class="developer-card card">
+                        <img src="/static/img/erika.png" class="card-img-top" alt="Developer 3">
+                        <div class="card-body">
+                            <h5 class="card-title">Erika</strong></h5>
+                            <p class="card-text">Frontend Developer</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col d-flex justify-content-center">
+                    <div class="developer-card card">
+                        <img src="/static/img/timothy.png" class="card-img-top" alt="Developer 4">
+                        <div class="card-body">
+                            <h5 class="card-title">Timothy</strong></h5>
+                            <p class="card-text">Database Engineer</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

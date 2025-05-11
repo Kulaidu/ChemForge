@@ -1,0 +1,28 @@
+{% extends "layout.html" %}
+
+{% block head %}
+    <title>ChemForge</title>
+{% endblock %}
+
+{% block main %}
+<div class="container">
+    <header class="text-center database-head">
+        <h1>Select a Database</h1>
+    </header>
+    <form method="post" action="/database_select">
+        <div class="database-selection row row-cols-1 text-center g-3 mt-5">
+            <div class="col diff-col">
+                <input id="compounds" class="btn-check" type="radio" name="database_selection" value="Compounds" autocomplete="off" required>
+                <label class="btn btn-outline-primary w-25" for="compounds">Compounds.db</label>
+            </div>
+            <div class="col diff-col">
+                <input id="questions" class="btn-check" type="radio" name="database_selection" value="Questions" autocomplete="off" required>
+                <label class="btn btn-outline-primary w-25" for="questions">Questions.db</label>
+            </div>
+        </div>
+        <div class="text-center mt-4">
+            <button type="submit" class="btn btn-primary w-25">Select Database</button>
+        </div>
+    </form>
+</div>
+{% endblock %}

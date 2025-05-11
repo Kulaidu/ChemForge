@@ -1,0 +1,70 @@
+{% extends "layout.html" %}
+
+{% block head %}
+    <title>ChemForge</title>
+{% endblock %}
+
+{% block main %}
+<div class="container-md justify-content-center align-items-center" id="formulaInput">
+    <!-- Input Form -->
+    <div id="formulaInput" class="w-100">
+        <form id="formulaForm" action="/index" method="post">
+            <div class="mb-3">
+                <label for="inputFormula" class="form-label">Enter Chemical Formula</label>
+                <input type="text" class="form-control" id="inputFormula" name="inputFormula" aria-describedby="formulaInputHelp" required>
+                <div id="formulaInputHelp" class="form-text">Use standard element symbols (e.g., H2O, CO2).</div>
+                {% if error %}
+                    <div class="alert alert-danger mt-3">{{ error }}</div>
+                {% endif %}
+            </div>
+            <button type="submit" class="btn btn-primary w-100">Find Compound</button>
+        </form>
+    </div>
+</div>
+
+{% if results %}
+<div class="result-container mt-4 p-4">
+    <h3>Found Compounds</h3>
+    <div class="row row-cols-3 row-cols-md-5 g-4">
+    {% for compound in results %}
+        <div class="col">
+            <form action="{{ url_for('compound_details') }}" method="post" class="h-100">
+                <input type="hidden" name="compound_id" value="{{ compound.id }}">
+                <button type="submit" class="custom-card-button">
+                    <div class="card custom-card h-100">
+                        <img src="data:image/png;base64,{{ compound.structure_image }}" class="card-img-top mx-auto d-block" alt="{{ compound.name }} 2D Structure">
+                        <div class="card-body text-center">
+                            <h5 class="card-title">{{ compound.formula }}</h5>
+                            <p class="card-text">{{ compound.name }}</p>
+                        </div>
+                    </div>
+                </button>
+            </form>
+        </div>
+    {% endfor %}
+    </div>
+</div>
+{% else %}
+<div class="result-container mt-4 p-4">
+    <h3>Sample Compounds</h3>
+    <div class="row row-cols-3 row-cols-md-5 g-4">
+    {% for compound in samples %}
+        <div class="col">
+            <form action="{{ url_for('compound_details') }}" method="post" class="h-100">
+                <input type="hidden" name="compound_id" value="{{ compound.id }}">
+                <button type="submit" class="custom-card-button">
+                    <div class="card custom-card h-100">
+                        <img src="data:image/png;base64,{{ compound.structure_image }}" class="card-img-top mx-auto d-block" alt="{{ compound.name }} 2D Structure">
+                        <div class="card-body text-center">
+                            <h5 class="card-title">{{ compound.formula }}</h5>
+                            <p class="card-text">{{ compound.name }}</p>
+                        </div>
+                    </div>
+                </button>
+            </form>
+        </div>
+    {% endfor %}
+    </div>
+</div>
+{% endif %}
+{% endblock %}

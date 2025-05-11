@@ -1,0 +1,28 @@
+{% extends "layout.html" %}
+
+{% block head %}
+    <title>ChemForge</title>
+{% endblock %}
+
+{% block main %}
+<div class="container">
+    <header class="text-center difficulty-head">
+        <h1>Select Difficulty</h1>
+    </header>
+    <form method="get" action="/test">
+        <div class="difficulty-selection row row-cols-1 text-center g-3 mt-5">
+            <div class="col diff-col">
+                <input id="easy" class="btn-check" type="radio" name="difficulty" value="Easy" autocomplete="off" required>
+                <label class="btn btn-outline-primary w-25" for="easy">Easy</label>
+            </div>
+            <div class="col diff-col">
+                <input id="hard" class="btn-check" type="radio" name="difficulty" value="Hard" autocomplete="off" required>
+                <label class="btn btn-outline-primary w-25" for="hard">Hard</label>
+            </div>
+        </div>
+        <div class="text-center mt-4">
+            <button type="submit" class="btn btn-primary w-25">Start Test</button>
+        </div>
+    </form>
+</div>
+{% endblock %}

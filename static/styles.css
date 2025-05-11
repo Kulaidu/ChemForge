@@ -1,0 +1,517 @@
+body {
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(
+        circle farthest-side at 0% 50%,
+        #282828 23.5%,
+        rgba(255, 170, 0, 0) 0
+      )
+      21px 30px,
+    radial-gradient(
+        circle farthest-side at 0% 50%,
+        #2c3539 24%,
+        rgba(240, 166, 17, 0) 0
+      )
+      19px 30px,
+    linear-gradient(
+        #282828 14%,
+        rgba(240, 166, 17, 0) 0,
+        rgba(240, 166, 17, 0) 85%,
+        #282828 0
+      )
+      0 0,
+    linear-gradient(
+        150deg,
+        #282828 24%,
+        #2c3539 0,
+        #2c3539 26%,
+        rgba(240, 166, 17, 0) 0,
+        rgba(240, 166, 17, 0) 74%,
+        #2c3539 0,
+        #2c3539 76%,
+        #282828 0
+      )
+      0 0,
+    linear-gradient(
+        30deg,
+        #282828 24%,
+        #2c3539 0,
+        #2c3539 26%,
+        rgba(240, 166, 17, 0) 0,
+        rgba(240, 166, 17, 0) 74%,
+        #2c3539 0,
+        #2c3539 76%,
+        #282828 0
+      )
+      0 0,
+    linear-gradient(90deg, #2c3539 2%, #282828 0, #282828 98%, #2c3539 0%) 0 0
+      #282828;
+  background-size: 40px 60px;
+}
+
+.navbar {
+    background-color: rgb(34, 34, 34) !important;
+}
+
+body, 
+main,
+#navbarNav .active,
+.navbar {
+    color: white;
+}
+
+main {
+    margin: 75px 10px 10px;
+}
+
+.navbar .disabled,
+#formulaInputHelp {
+    color: rgb(180, 180, 180);
+}
+
+#formulaInput {
+    max-width: 500px;
+}
+
+.btn-primary:hover, .btn-outline-primary:hover {
+  transform: scale(1.05);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 8px 16px rgba(255, 255, 255, 0.5);
+}
+
+.btn-outline-primary{
+  box-shadow: rgba(255,255,255,0.25);
+  background-color: rgba(75, 78, 109, 0.5);
+  color: rgb(255,255,255)
+}
+
+.btn-outline-primary:hover {
+  background-color: rgba(75, 78, 109, 0.5) !important;
+  color: rgb(255,255,255) !important;
+}
+
+input {
+    color: rgb(34, 34, 34);
+    width: 100%;
+    max-width: 500px;
+}
+
+.viewer3D,
+.img-2d {
+    width: 400px;
+    height: 400px;
+}
+
+.mol-container,
+.container2d {
+    width: 100%;
+    max-width: 400px;
+    position: relative;
+    margin-top: 25px;
+    margin-bottom: 25px;
+    justify-content: center;
+    align-items: center;
+}
+
+.container2d {
+    display: flex;
+}
+
+.mol-container {
+    display: none;
+}
+
+.viewer3D #undefined {
+    position: relative !important;
+    background-color: transparent !important;
+}
+
+.result-container {
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+}
+
+.card-img-top {
+    max-width: 100%;
+    height: auto;
+    margin: 0 auto;
+}
+
+.custom-card:hover {
+    transform: scale(1.05);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0 8px 16px rgba(255, 255, 255, 0.5);
+}
+
+.mol-container,
+.mol-test-container,
+.about-container,
+.container2d,
+.custom-card {
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    backdrop-filter: blur(2px);
+    box-shadow: 0 4px 10px rgba(255, 255, 255, 0.25);
+    overflow: hidden;
+    color: white;
+}
+
+.custom-card-button {
+    display: block;
+    width: 100%;
+    height: 100%;
+    padding: 0;
+    border: none;
+    background: transparent;
+}
+
+/* The switch - the box around the slider */
+.switch {
+    font-size: 18px;
+    position: relative;
+    display: inline-block;
+    width: 5.2em;
+    height: 2em;
+    overflow: hidden;
+  }
+  
+  /* Hide default HTML checkbox */
+  .switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+  }
+  
+  /* The slider */
+  .slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgb(75,78,109);
+    transition: .4s;
+    border-radius: 10px;
+  }
+  
+  .slider:before {
+    position: absolute;
+    content: "";
+    height: 1.4em;
+    width: 1.4em;
+    border-radius: 20px;
+    border: 1px solid #333;
+    left: 0.4em;
+    bottom: 0.2em;
+    background-color: white;
+    transition: .4s;
+  }
+  
+  input:checked + .slider {
+    background-color: rgb(132, 220, 198);
+  }
+  
+  input:focus + .slider {
+    box-shadow: 0 0 1px rgb(132, 220, 198);
+  }
+  
+  input:checked + .slider:before {
+    transform: translateX(3em);
+  }
+  
+  .switch .text {
+    position: absolute;
+    top: 50%;
+    pointer-events: none;
+    text-transform: uppercase;
+    transform: translateY(-50%);
+    transition: .4s;
+  }
+  
+  .switch .text.on {
+    left: .8rem;
+    transform: translateX(-3rem) translateY(-50%);
+    color: rgb(34, 34, 34);
+  }
+  
+  .switch .text.off {
+    color: white;
+    right: .8rem;
+  }
+  
+  input:checked ~ .text.off {
+    transform: translateX(3rem) translateY(-50%);
+  }
+  
+  input:checked ~ .text.on {
+    transform: translateX(0) translateY(-50%);
+  }
+
+  .question-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 80vh;
+}
+.question-text {
+    font-size: 1.5rem;
+    margin-bottom: 2rem;
+    text-align: center;
+}
+.error-message {
+    color: #ff6b6b !important;
+    font-size: 1rem;
+    margin-bottom: 1rem;
+}
+
+.correct-message {
+    color: rgb(132,220,198) !important;
+    font-size: 1rem;
+    margin-bottom: 1rem;
+}
+
+.hidden {
+  display: none;
+}
+
+.btn-check:checked + .btn {
+  background-color: rgb(132,220,198);
+  color: white !important;
+}
+
+.btn-check:checked + .btn:hover {
+  background-color: rgb(132,220,198) !important;
+  color: white;
+}
+
+input[type=text], 
+input[type=text]:active, 
+input[type=text]:focus{
+  color: rgb(0,0,0);
+  background-color: #ddd;
+}
+
+input[type=text]:disabled {
+  color: rgb(0,0,0);
+  background-color: rgb(149,163,179);
+}
+
+input[type="text"]::placeholder {
+  color: rgba(0, 0, 0, 0.6);
+  opacity: 1;
+}
+
+input[type="text"]:disabled::placeholder {
+  color: rgba(0, 0, 0, 0.4);
+}
+
+.feedback-message {
+  min-height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.about-container {
+  padding: 50px;
+  max-width: 1100px;
+  border-radius: 10px;
+  margin-bottom: 25px;
+}
+
+.about-center img {
+  max-width: 150px;
+}
+
+.about-center h3 {
+  color: rgb(149,163,179);
+}
+
+.about-desc,
+.developer {
+  margin-top: 25px;
+}
+
+.developer-card {
+  text-align: center;
+  border: 1px solid #ddd;
+  padding: 16px;
+  border-radius: 8px;
+  max-width: 300px;
+  width: 100%;
+  background-color: rgba(255,255,255,0.25);
+  color: white;
+}
+.developer-card img {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+/* Loading Animation */
+.loader {
+  height: 20rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.react-star {
+  position: relative;
+  width: 15rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 15rem;
+  animation: rotate 3s infinite;
+}
+
+.nucleus {
+  position: absolute;
+
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  background: linear-gradient(#0738e8, cyan);
+  height: 1rem;
+  width: 1rem;
+  animation: rotate 1s linear infinite;
+}
+
+.electron {
+  position: absolute;
+  width: 8rem;
+  height: 3rem;
+  border-radius: 50%;
+  border: 0.3rem solid #00ffff;
+  animation: revolve 1s linear infinite;
+}
+
+.electron1::before,
+.electron2::before,
+.electron3::before {
+  content: "";
+  position: absolute;
+  top: 60%;
+  left: 100%;
+  transform: translate(-50%, -50%);
+  width: .5rem;
+  height: .5rem;
+  background-color: cyan;
+  border-radius: 50%;
+  animation: moveElectron 1s infinite;
+}
+.electron2 {
+  transform: rotate(60deg);
+  animation-delay: -0.66s;
+}
+.electron2::before {
+  animation-delay: -0.66s;
+}
+
+.electron3 {
+  transform: rotate(-60deg);
+}
+
+@keyframes rotate {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg) scale3d(1.1, 1.1, 0);
+  }
+}
+
+@keyframes revolve {
+  0% {
+    border-color: #00ffff9c;
+    border-right: transparent;
+  }
+  25% {
+    border-color: #00ffff9c;
+    border-bottom-color: transparent;
+  }
+  50% {
+    border-color: #00ffff9c;
+    border-left-color: transparent;
+  }
+  75% {
+    border-color: #00ffff9c;
+    border-top-color: transparent;
+  }
+  100% {
+    border-color: #00ffff9c;
+    border-right-color: transparent;
+  }
+}
+
+@keyframes moveElectron {
+  0% {
+    top: 60%;
+    left: 100%;
+  }
+  25% {
+    top: 100%;
+    left: 60%;
+  }
+  50% {
+    top: 60%;
+    left: 0%;
+  }
+  75% {
+    top: 0%;
+    left: 60%;
+  }
+  100% {
+    top: 60%;
+    left: 100%;
+  }
+}
+
+#splash-main {
+  margin: 0;
+}
+
+#loading {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(34, 34, 34, 0.8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+}
+
+.select_pages {
+  max-width: 100px;
+  display: inline-block;
+}
+
+#compounds_database_table,
+#questions_database_table {
+  font-size: 0.85rem;
+}
+
+#compounds_database_table th, #compounds_database_table td, 
+#questions_database_table th, #questions_database_table td {
+  padding: 4px 6px;
+  text-align: center;
+  vertical-align: middle;
+}
+
+#compounds_database_table .btn-sm,
+#questions_database_table .btn-sm {
+  font-size: 0.75rem;
+  padding: 4px 6px;
+  margin: auto;
+  display: inline-block;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+}

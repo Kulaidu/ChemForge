@@ -1,0 +1,119 @@
+{% extends "layout.html" %}
+
+{% block head %}
+<title>ChemForge</title>
+<script src="static/3Dmol.js/build/3Dmol-min.js"></script>
+{% endblock %}
+
+{% block main %}
+<div class="container">
+    <div id="controls">
+        <a href="/index" class="btn btn-outline-secondary"><i class="bi bi-arrow-left"></i> Return</a>
+    </div>
+    <div class="result-container row">
+        <div class="structure_container col-sm text-center d-flex flex-column justify-content-center align-items-center">
+            <!-- 2D Structure -->
+            <div class="container2d">
+                <img class="img-2d" src="data:image/png;base64,{{ compound.image2d }}" alt="2D Structure">
+            </div>
+
+            <!-- 3D Structure -->
+            <div class="mol-container">
+                <div class="viewer3D" id="viewer3D" alt="3D Structure" data-backgroundalpha="0"></div>
+                <script>
+                    document.addEventListener('DOMContentLoaded', function() {
+                        let config = {
+                            backgroundColor: null,
+                            backgroundAlpha: 0,
+                            alpha: true,
+                            antialias: true
+                         }
+                        let viewer = $3Dmol.createViewer('viewer3D', config);
+                        let molData = `{{ compound.mol_block | safe }}`;
+                        viewer.addModel(molData, 'sdf');
+                        viewer.setStyle({}, { stick: { radius: 0.1 }, sphere: { radius: 0.3 } });
+                        viewer.zoomTo();
+                        viewer.render();
+                        viewer.setBackgroundColor(null);
+                    });
+                </script>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <label class="switch">
+                        <input type="checkbox">
+                        <span class="slider"></span>
+                        <span class="text on">3D</span>
+                        <span class="text off">2D</span>
+                    </label>
+                </div>
+            </div>
+        </div>
+
+        <!-- Property Table -->
+        <div class="prop-table col-sm">
+            <table class="table table-dark table-striped">
+                <tbody>
+                    <tr>
+                        <td>Name</td>
+                        <td>{{ compound['name'] }}</td>
+                    </tr>
+                    <tr>
+                        <td>Molecular Formula</td>
+                        <td>{{ compound['formula'] }}</td>
+                    </tr>
+                    <tr>
+                        <td>Components</td>
+                        <td>{{ compound['components'] }}</td>
+                    </tr>
+                    <tr>
+                        <td>Molecular Weight</td>
+                        <td>{{ compound['mol_weight'] }} g/mol</td>
+                    </tr>
+                    <tr>
+                        <td>Bond Type</td>
+                        <td>{{ compound['bond_type'] }}</td>
+                    </tr>
+                    <tr>
+                        <td>Color</td>
+                        <td>{{ compound['color'] }}</td>
+                    </tr>
+                    <tr>
+                        <td>Form</td>
+                        <td>{{ compound['form'] }}</td>
+                    </tr>
+                </tbody>
+            </table>
+            {% if compound['bond_type'] == "Ionic" %}
+            <div class="alert alert-warning">
+                3D structure for ionic bond is not supported by 3Dmol.js
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+<script language="javascript">
+    document.addEventListener('DOMContentLoaded', function() {
+        const molContainer = document.querySelector('.mol-container');
+        const container2d = document.querySelector('.container2d');
+        const toggleSwitch = document.querySelector('.switch input[type="checkbox"]');
+        const switchTextOn = document.querySelector('.switch .text.on');
+        const switchTextOff = document.querySelector('.switch .text.off');
+
+        function toggleStructures() {
+            if (toggleSwitch.checked) {
+                // Hide 2D, show 3D
+                container2d.style.display = 'none';
+                molContainer.style.display = 'flex';
+            } else {
+                // Show 2D, hide 3D
+                container2d.style.display = 'flex';
+                molContainer.style.display = 'none';
+            }
+        }
+
+        toggleSwitch.addEventListener('change', toggleStructures);
+   });
+</script>
+{% endblock %} 

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}" type="image/x-icon">
+    <link rel="stylesheet" href="{{ url_for('static', filename='bootstrap-icons.css') }}">
+    <link href="{{ url_for('static', filename='bootstrap/css/bootstrap.min.css') }}" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link href="{{ url_for('static', filename='styles.css') }}" rel="stylesheet">
+    <script src="{{ url_for('static', filename='script.js') }}" defer></script>
+{% block head %}
+{% endblock %}
+</head>
+
+<body>
+  <div class="loader d-none" id="loading">
+    <div class="react-star">
+        <div class="nucleus"></div>
+        <div class="electron electron1"></div>
+        <div class="electron electron2"></div>
+        <div class="electron electron3"></div>
+    </div>
+  </div>
+    <nav class="navbar navbar-expand-md border-bottom border-body fixed-top bg-dark navbar-dark">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="/index">
+            <img src="{{ url_for('static', filename='logo.png') }}" alt="Logo" width="30" height="30" class="d-inline-block align-text-top">
+            ChemForge
+          </a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+              <li class="nav-item">
+                <a class="nav-link {% if request.path in ['/index', '/result'] %}active{% endif %}" href="/index">Home</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link {% if request.path in ['/test-difficulty', '/test'] %}active{% endif %}" href="/test-difficulty">Self-Test</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link {% if request.path in ['/databases', '/questions_database', '/compounds_database'] %}active{% endif %}" href="/databases">Databases</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link {% if request.path == '/about' %}active{% endif %}" href="/about">About</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+    </nav>
+    <main class="mt-5 pt-5">
+        {% block main %}{% endblock %}
+    </main>
+    <script src="{{ url_for('static', filename='bootstrap/js/bootstrap.bundle.min.js') }}" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous" defer></script>
+</body>
+</html>
